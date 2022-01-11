@@ -1,0 +1,41 @@
+%section#introduction
+  .container
+    .row.fill-viewport.align-items-center.justify-content-center
+      .col-12.col-md-6
+        .row
+          .col-md-auto
+            %h1.text-white.title.inline-block
+              = I18n.t("title")
+        .row
+          .col.button
+            %button.btn.btn-primary{:disabled => "disabled", :type => "button"}
+              = I18n.t("level")
+              = ':'
+              %span.badge.badge-light
+                = @game_manager.level
+            %button.btn.btn-primary{:disabled => "disabled", :type => "button"}
+              = I18n.t("attempts_left")
+              = ':'
+              %span.badge.badge-light
+                = @game_manager.codebreaker_game.available_attempts
+                = '/'
+                = @game_manager.total_amount(:attempts)
+            %button.btn.btn-primary{:disabled => "disabled", :type => "button"}
+              = I18n.t("hints_left")
+              = ':'
+              %span.badge.badge-light
+                = @game_manager.codebreaker_game.available_hints
+                = '/'
+                = @game_manager.total_amount(:hints)
+        %hr.mb-4/
+        .row
+          .text-center
+            .text-center
+              %h3.text-white
+                = I18n.t("win", name: @game_manager.codebreaker_game.name)
+            %img.img-fluid{:alt => "You won the game!", :src => "assets/images/won.gif"}/
+        %hr.mb-4/
+        %a.btn.btn-primary.btn-lg{:href => "/", :role => "button"}
+          = I18n.t("button.play_again")
+        %a.btn.btn-success.btn-lg.float-right{:href => "/statistics", :role => "button"}
+          = I18n.t("button.statistics")

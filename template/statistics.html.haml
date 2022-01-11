@@ -1,0 +1,52 @@
+%section#introduction
+  .container
+    .row.fill-viewport.align-items-center.justify-content-center
+      .col-12.col-md-6
+        .row
+          .col-md-auto
+            %h1.text-white.title
+              = I18n.t("title")
+        -if load.empty?
+          %p.lead.text-white-70
+            = I18n.t("no_winners")
+        -else
+          %p.lead.text-white-70
+            = I18n.t("label.top_players")
+          %hr.mb-4/
+          .table-responsive-md.scores
+            %table.table.table-striped.table.table-sm
+              %thead
+                %tr
+                  %th{:scope => "col"} #
+                  %th{:scope => "col"}
+                    = I18n.t("name")
+                  %th{:scope => "col"}
+                    = I18n.t("level")
+                  %th{:scope => "col"}
+                    = I18n.t("attempts_left")
+                  %th{:scope => "col"}
+                    = I18n.t("hints_left")
+                  %th{:scope => "col"}
+                    = I18n.t("date")
+              %tbody
+                - Codebreaker::Statistics.statistics(load).map.with_index do |game, index|
+                  %tr
+                    %th{:scope => "row"}
+                      = index+1
+                    %td
+                      = game.name
+                    %td
+                      = game.difficulty.to_s.capitalize
+                    %td
+                      = game.available_attempts
+                      = '/'
+                      = game.available_attempts + game.attempts
+                    %td
+                      = game.available_hints
+                      = '/'
+                      = game.available_hints + game.hints
+                    %td
+                      = game.date.strftime("%Y.%m.%d - %H:%M:%S")
+        %hr.mb-4/
+        %a.btn.btn-primary.btn-lg{:href => "/", :role => "button"}
+          = I18n.t("button.home")

@@ -1,0 +1,55 @@
+%section#introduction
+  .container
+    = @game_manager.codebreaker_game.send(:secret_code)
+    .row.fill-viewport.align-items-center.justify-content-center
+      .col-12.col-md-6
+        .row
+          .col-md-auto
+            %h1.text-white.title
+              = I18n.t("title")
+        %p.lead.text-white-70
+          = I18n.t("welcome", name: @game_manager.codebreaker_game.name)
+        %hr.mb-4/
+        .row
+          .col.button
+            %button.btn.btn-primary{:type => "button"}
+              = I18n.t("level")
+              = ':'
+              %span.badge.badge-light
+                = -@game_manager.level
+          .col.text-center.button
+            %button.btn.btn-primary{:disabled => !@game_manager.codebreaker_game.present_attempts?, :type => "button", :id=> "attempts"}
+              = I18n.t("attempts")
+              = ':'
+              %span.badge.badge-light
+                = @game_manager.codebreaker_game.available_attempts
+          .col.button
+            %button.btn.btn-primary.float-right{:disabled => !@game_manager.codebreaker_game.present_hints?, :type => "button"}
+              = I18n.t("hints")
+              = ':'
+              %span.badge.badge-light
+                = @game_manager.codebreaker_game.available_hints
+        %hr.mb-4/
+        %form{:action => "/submit_answer", :method => "post"}
+          .form-group
+            %input.form-control.guess_input{:autocomplete => "off", :name => "number", :pattern => "^[1-6]{4}$", :placeholder => "1234", :required => ""}/
+          .form-group.guess_markers_list
+            #guess_marker
+              - @game_manager.matrix.each do |field|
+                - case field
+                - when "+"
+                  %button.btn.btn-success.marks{:disabled => "disabled", :type => "button"}
+                    = field
+                - when "-"
+                  %button.btn.btn-primary.marks{:disabled => "disabled", :type => "button"}
+                    = field
+                - else
+                  %button.btn.btn-danger.marks{:disabled => "disabled", :type => "button"} x
+          %hr.mb-4/
+          %button.btn.btn-primary.btn-lg{:type => "submit"}
+            = I18n.t("button.submit")
+          %a.btn.btn-warning.btn-lg.float-right{:href => "/hint", :role => "button"}
+            = I18n.t("button.hint")
+            - @game_manager.hints.each do |hint|
+              %span.badge.badge-light
+                = hint
