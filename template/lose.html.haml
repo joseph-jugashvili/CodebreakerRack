@@ -17,7 +17,7 @@
               = I18n.t("attempts_left")
               = ':'
               %span.badge.badge-light
-                = @game_manager.codebreaker_game.available_attempts
+                = @game_manager.total_amount(:attempts) - @game_manager.codebreaker_game.attempts
                 = '/'
                 = @game_manager.total_amount(:attempts)
             %button.btn.btn-primary{:disabled => "disabled", :type => "button"}

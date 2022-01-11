@@ -372,7 +372,7 @@ RSpec.describe App do
       end
 
       it 'correct display attempts' do
-        included_text = "#{levels[level.to_sym][:attempts] - 1}\n/\n#{levels[level.to_sym][:attempts]}"
+        included_text = "0\n/\n1"
         expect(last_response.body).to include(included_text)
       end
 

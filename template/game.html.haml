@@ -22,7 +22,7 @@
               = I18n.t("attempts")
               = ':'
               %span.badge.badge-light
-                = @game_manager.codebreaker_game.available_attempts
+                = @game_manager.codebreaker_game.available_attempts - @game_manager.codebreaker_game.attempts
           .col.button
             %button.btn.btn-primary.float-right{:disabled => !@game_manager.codebreaker_game.present_hints?, :type => "button"}
               = I18n.t("hints")

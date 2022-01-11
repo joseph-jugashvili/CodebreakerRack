@@ -34,19 +34,17 @@
                     %th{:scope => "row"}
                       = index+1
                     %td
-                      = game.name
+                      = game[1]
                     %td
-                      = game.difficulty.to_s.capitalize
+                      = Codebreaker::Game::DIFFICULTIES.keys[game[2]].to_s.capitalize
                     %td
-                      = game.available_attempts
+                      = Codebreaker::Game::DIFFICULTIES[Codebreaker::Game::DIFFICULTIES.keys[game[2]]][:attempts] - game[3]
                       = '/'
-                      = game.available_attempts + game.attempts
+                      = Codebreaker::Game::DIFFICULTIES[Codebreaker::Game::DIFFICULTIES.keys[game[2]]][:attempts]
                     %td
-                      = game.available_hints
+                      = Codebreaker::Game::DIFFICULTIES[Codebreaker::Game::DIFFICULTIES.keys[game[2]]][:hints] - game[5]
                       = '/'
-                      = game.available_hints + game.hints
-                    %td
-                      = game.date.strftime("%Y.%m.%d - %H:%M:%S")
+                      = Codebreaker::Game::DIFFICULTIES[Codebreaker::Game::DIFFICULTIES.keys[game[2]]][:hints]
         %hr.mb-4/
         %a.btn.btn-primary.btn-lg{:href => "/", :role => "button"}
           = I18n.t("button.home")
