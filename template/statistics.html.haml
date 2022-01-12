@@ -1,0 +1,50 @@
+%section#introduction
+  .container
+    .row.fill-viewport.align-items-center.justify-content-center
+      .col-12.col-md-6
+        .row
+          .col-md-auto
+            %h1.text-white.title
+              = I18n.t("title")
+        -if load.empty?
+          %p.lead.text-white-70
+            = I18n.t("no_winners")
+        -else
+          %p.lead.text-white-70
+            = I18n.t("label.top_players")
+          %hr.mb-4/
+          .table-responsive-md.scores
+            %table.table.table-striped.table.table-sm
+              %thead
+                %tr
+                  %th{:scope => "col"} #
+                  %th{:scope => "col"}
+                    = I18n.t("name")
+                  %th{:scope => "col"}
+                    = I18n.t("level")
+                  %th{:scope => "col"}
+                    = I18n.t("attempts_left")
+                  %th{:scope => "col"}
+                    = I18n.t("hints_left")
+                  %th{:scope => "col"}
+                    = I18n.t("date")
+              %tbody
+                - Codebreaker::Statistics.statistics(load).map.with_index do |game, index|
+                  %tr
+                    %th{:scope => "row"}
+                      = index+1
+                    %td
+                      = game[1]
+                    %td
+                      = Codebreaker::Game::DIFFICULTIES.keys[game[2]].to_s.capitalize
+                    %td
+                      = Codebreaker::Game::DIFFICULTIES[Codebreaker::Game::DIFFICULTIES.keys[game[2]]][:attempts] - game[3]
+                      = '/'
+                      = Codebreaker::Game::DIFFICULTIES[Codebreaker::Game::DIFFICULTIES.keys[game[2]]][:attempts]
+                    %td
+                      = Codebreaker::Game::DIFFICULTIES[Codebreaker::Game::DIFFICULTIES.keys[game[2]]][:hints] - game[5]
+                      = '/'
+                      = Codebreaker::Game::DIFFICULTIES[Codebreaker::Game::DIFFICULTIES.keys[game[2]]][:hints]
+        %hr.mb-4/
+        %a.btn.btn-primary.btn-lg{:href => "/", :role => "button"}
+          = I18n.t("button.home")

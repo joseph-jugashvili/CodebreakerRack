@@ -1,0 +1,13 @@
+---
+- !ruby/object:Codebreaker::Game
+  secret_code: ''
+  name: ''
+  attempts: 0
+  hints: 0
+  difficulty: 0
+- !ruby/object:Codebreaker::Game
+  secret_code: ''
+  name: ''
+  attempts: 0
+  hints: 0
+  difficulty: 0
